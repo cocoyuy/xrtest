@@ -119,7 +119,7 @@ function setupThree() {
 
   // mirror
   mirror = getMirror();
-  mirror.position.y = 45;
+  mirror.position.y = -20;
 
 }
 
