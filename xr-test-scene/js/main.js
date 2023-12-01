@@ -48,7 +48,85 @@ let texts = ['equivocal',
   'malleable',
   'ephemeral',
   'pedant',
-  'gullible'
+  'gullible',
+  'equivocal',
+  'lucid',
+  'precipitate',
+  'assuage',
+  'erudite',
+  'enigma',
+  'placate',
+  'zeal',
+  'audacious',
+  'gullible',
+  'pedant',
+  'vacillate',
+  'capricious',
+  'loquacious',
+  'pragmatic',
+  'volatile',
+  'ephemeral',
+  'laconic',
+  'cacophony',
+  'enervate',
+  'ingenuous',
+  'misanthrope',
+  'venerate',
+  'eulogy',
+  'lethargic',
+  'obdurate',
+  'philanthropic',
+  'garrulous',
+  'malleable',
+  'ostentation',
+  'prevaricate',
+  'prevaricate',
+  'eulogy',
+  'laconic',
+  'loquacious',
+  'cacophony',
+  'malleable',
+  'ephemeral',
+  'pedant',
+  'equivocal',
+  'lucid',
+  'precipitate',
+  'assuage',
+  'erudite',
+  'enigma',
+  'placate',
+  'zeal',
+  'audacious',
+  'gullible',
+  'pedant',
+  'vacillate',
+  'capricious',
+  'loquacious',
+  'pragmatic',
+  'volatile',
+  'ephemeral',
+  'laconic',
+  'cacophony',
+  'enervate',
+  'ingenuous',
+  'misanthrope',
+  'venerate',
+  'eulogy',
+  'lethargic',
+  'obdurate',
+  'philanthropic',
+  'garrulous',
+  'malleable',
+  'ostentation',
+  'prevaricate',
+  'prevaricate',
+  'eulogy',
+  'laconic',
+  'loquacious',
+  'cacophony',
+  'malleable',
+  'ephemeral',
+  'pedant'
 ];
 let text_rotate = false;
 let tMeshs = [];
@@ -79,15 +157,6 @@ function setupThree() {
 
   room = getSphere();
   scene.add(room);
-
-  // // controls
-  // controls = new PointerLockControls(camera, renderer.domElement);
-  // scene.add(controls.getObject());
-
-  // // camera position setup
-  // camera.position.x = 0;
-  // camera.position.z = 0;
-  // camera.position.y = 50;
 
   // enable shadow
   renderer.shadowMap.enabled = true;
@@ -130,7 +199,7 @@ function updateCamera() {
 function getSphere() {
   const geometry = new THREE.SphereGeometry(600, 32, 32); // 6
   const material = new THREE.MeshBasicMaterial({
-    color: color7,
+    color: 0xfa9bdf, //color7
     side: THREE.DoubleSide
   });
   const mesh = new THREE.Mesh(geometry, material);
