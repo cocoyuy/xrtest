@@ -6,6 +6,7 @@ const WORLD_HALF = 1000;
 const MOUNTAIN = 600;
 let plane;
 let lights = [];
+let room;
 
 let textGroup;
 let texts = ['equivocal',
@@ -70,10 +71,14 @@ let params = {
 const MAX_PARTICLE_NUMBER = 600;
 let pointCloud;
 let particles = [];
+let color7;
 
 function setupThree() {
   // WebXR
   setupWebXR();
+
+  room = getSphere();
+  scene.add(room);
 
   // // controls
   // controls = new PointerLockControls(camera, renderer.domElement);
@@ -87,16 +92,6 @@ function setupThree() {
   // enable shadow
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-
-  // gui
-  gui
-    .add(camera, "fov")
-    .min(1)
-    .max(179)
-    .step(1)
-    .onChange(updateCamera);
-
-  sofa = getSofa();
 
   textGroup = new THREE.Group();
 
@@ -112,11 +107,6 @@ function setupThree() {
 
   scene.add(textGroup);
 
-
-  // plane 
-  // plane = getPlane();
-  // plane.rotation.x = PI / 2 * 3; // add it or not
-
   // mirror
   mirror = getMirror();
   mirror.position.y = -20;
@@ -124,7 +114,7 @@ function setupThree() {
 }
 
 function updateThree() {
-  const color7 = new THREE.Color(1, 179 / 250, 239 / 250);
+  color7 = new THREE.Color(1, 179 / 250, 239 / 250);
   scene.background = color7;
 
   if (text_rotate) {
@@ -135,6 +125,16 @@ function updateThree() {
 
 function updateCamera() {
   camera.updateProjectionMatrix();
+}
+
+function getSphere() {
+  const geometry = new THREE.SphereGeometry(600, 32, 32); // 6
+  const material = new THREE.MeshBasicMaterial({
+    color: color7,
+    side: THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  return mesh;
 }
 
 // event listeners
