@@ -43,11 +43,28 @@ function setupWebXR() {
 }
 
 function onSelectStart1(event) {
-    text_rotate = true;
+    // text_rotate = true;
+    const controller = event.target;
+    const intersections = getIntersections(controller);
+    if (intersections.length > 0) {
+        const intersection = intersections[0];
+        const object = intersection.object;
+        // object.material.emissive.b = 1;
+        controller.attach(object);
+        controller.userData.selected = object;
+    }
+    controller.userData.targetRayMode = event.data.targetRayMode;
 }
 
 function onSelectEnd1(event) {
-    text_rotate = false;
+    // text_rotate = false;
+    const controller = event.target;
+    if (controller.userData.selected !== undefined) {
+        const object = controller.userData.selected;
+        // object.material.emissive.b = 0;
+        group.attach(object);
+        controller.userData.selected = undefined;
+    }
 }
 
 function onSelectStart(event) {

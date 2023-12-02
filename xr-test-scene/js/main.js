@@ -198,11 +198,11 @@ function updateThree() {
     }
 
     // generate cubes by controller
-    if (controller1.userData.isSelecting === true) {
+    if (controller2.userData.isSelecting === true) {
       // controller's position and direction
-      const position = controller1.position;
+      const position = controller2.position;
       const direction = new THREE.Vector3(0, 0, -1); // default direction
-      direction.applyQuaternion(controller1.quaternion); // apply the rotation of the controller 
+      direction.applyQuaternion(controller2.quaternion); // apply the rotation of the controller 
 
       // generate a cube using the position and direction      
       let object = new Cube()
@@ -245,6 +245,8 @@ function updateThree() {
     }
   }
 
+  cleanIntersected();
+  intersectObjects(controller1);
   if (text_rotate) {
     // console.log("rotate");
     textGroup.rotation.y += 0.004; // rotate around the world center
@@ -261,6 +263,66 @@ function updateThree() {
   for (let f of fireworks) {
     f.update();
     f.show();
+  }
+
+}
+
+let raycaster;
+
+const intersected = [];
+const tempMatrix = new THREE.Matrix4();
+
+function getIntersections(controller) {
+
+  controller.updateMatrixWorld();
+
+  tempMatrix.identity().extractRotation(controller.matrixWorld);
+
+  raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+  raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
+
+  return raycaster.intersectObjects(textGroup.children, false);
+
+}
+
+function intersectObjects(controller) {
+
+  // Do not highlight in mobile-ar
+
+  if (controller.userData.targetRayMode === 'screen') return;
+
+  // Do not highlight when already selected
+
+  if (controller.userData.selected !== undefined) return;
+
+  const line = controller.getObjectByName('line');
+  const intersections = getIntersections(controller);
+
+  if (intersections.length > 0) {
+
+    const intersection = intersections[0];
+
+    const object = intersection.object;
+    object.material.emissive.r = 1;
+    intersected.push(object);
+
+    line.scale.z = intersection.distance;
+
+  } else {
+
+    line.scale.z = 5;
+
+  }
+
+}
+
+function cleanIntersected() {
+
+  while (intersected.length) {
+
+    const object = intersected.pop();
+    object.material.emissive.r = 0;
+
   }
 
 }
