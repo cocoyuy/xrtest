@@ -6,9 +6,11 @@ function setupWebXR() {
     // controller 
     function onSelectStart() {
         this.userData.isSelecting = true;
+        fire = true;
     }
     function onSelectEnd() {
         this.userData.isSelecting = false;
+        fire = false;
     }
     controller = renderer.xr.getController(0);
     controller.addEventListener("axischange", onAxisChange);
