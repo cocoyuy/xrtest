@@ -198,11 +198,11 @@ function updateThree() {
     }
 
     // generate cubes by controller
-    if (controller.userData.isSelecting === true) {
+    if (controller1.userData.isSelecting === true) {
       // controller's position and direction
-      const position = controller.position;
+      const position = controller1.position;
       const direction = new THREE.Vector3(0, 0, -1); // default direction
-      direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
+      direction.applyQuaternion(controller1.quaternion); // apply the rotation of the controller 
 
       // generate a cube using the position and direction      
       let object = new Cube()
