@@ -176,8 +176,8 @@ function updateThree() {
   currentTime += delta;
 
   // football.visible = false;
-  textGroup.visible = false;
-  mirror.visible = false;
+  // textGroup.visible = false;
+  // mirror.visible = false;
 
   if (currentTime < TRANS1) {
     // football.visible = true;
