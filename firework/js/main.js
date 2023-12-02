@@ -52,7 +52,7 @@ function onKeyUp(event) {
 function getSphere() {
   const geometry = new THREE.SphereGeometry(800, 32, 32); // 6
   const material = new THREE.MeshBasicMaterial({
-    color: 0x030303, //color7
+    color: 0x575757, //color7
     side: THREE.DoubleSide
   });
   const mesh = new THREE.Mesh(geometry, material);
