@@ -4,6 +4,8 @@ let gravity;
 let fire = false;
 
 function setupThree() {
+  // WebXR
+  setupWebXR();
   gravity = createVector(0, -0.07, 0);
   // console.log(camera);
 }
