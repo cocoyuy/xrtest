@@ -18,7 +18,7 @@ function updateThree() {
       fireworks.push(new Firework(true));
     }
   }
-  if (random(1) < 0.03) {
+  if (random(1) < 0.02) {
     fireworks.push(new Firework(false));
   }
   for (let f of fireworks) {
