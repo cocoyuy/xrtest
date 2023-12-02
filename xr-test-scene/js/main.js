@@ -212,6 +212,37 @@ function updateThree() {
         .setScale(random(0.5, 1.0));
       objects.push(object);
     }
+
+    // generate cubes in real time
+    // let numOfCubes = floor(random(1, 2));
+    // for (let i = 0; i < numOfCubes; i++) {
+    //   let object = new RandomObj()
+    //     .setPosition(0, 6, 0)
+    //     .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
+    //     .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
+    //     .setScale(random(0.3, 0.6));
+    //   objects.push(object);
+    // }
+
+    // update the cubes
+    for (let c of objects) {
+      let gravity = createVector(0, -0.0001, 0);
+      c.applyForce(gravity);
+      c.move();
+      c.rotate();
+      c.age();
+      c.update();
+    }
+
+    // remove the cubes that are done
+    for (let i = 0; i < objects.length; i++) {
+      let c = objects[i];
+      if (c.isDone) {
+        scene.remove(c.mesh);
+        objects.splice(i, 1);
+        i--;
+      }
+    }
   }
 
   if (text_rotate) {
