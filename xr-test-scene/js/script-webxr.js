@@ -62,7 +62,7 @@ function onSelectEnd1(event) {
     if (controller.userData.selected !== undefined) {
         const object = controller.userData.selected;
         // object.material.emissive.b = 0;
-        group.attach(object);
+        textGroup.attach(object);
         controller.userData.selected = undefined;
     }
 }
