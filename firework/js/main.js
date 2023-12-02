@@ -2,12 +2,14 @@ const WORLD_SIZE = 2000;
 let fireworks = [];
 let gravity;
 let fire = false;
+let room;
 
 function setupThree() {
   // WebXR
   setupWebXR();
   gravity = createVector(0, -0.07, 0);
-  // console.log(camera);
+  room = getSphere();
+  scene.add(room);
 }
 
 function updateThree() {
@@ -47,6 +49,16 @@ function onKeyUp(event) {
   }
 };
 
+function getSphere() {
+  const geometry = new THREE.SphereGeometry(800, 32, 32); // 6
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x030303, //color7
+    side: THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  return mesh;
+}
+
 function getFirework() {
   let geometry = new THREE.SphereGeometry(1);
   let material = new THREE.MeshBasicMaterial({
@@ -61,7 +73,7 @@ function getFirework() {
 class Firework {
   constructor(user) {
     this.firework = new fParticle()
-      .setPosition(random(-400, 400), 0, 0)
+      .setPosition(random(-600, 600), 0, random(-600, 600))
       .setVelocity(0, random(7, 9), 0)
       .setScale(5);
     this.exploded = false;
