@@ -43,13 +43,14 @@ function setupWebXR() {
 }
 
 function onSelectStart1(event) {
-    // text_rotate = true;
+    text_rotate2 = true;
+    fire = true;
     const controller = event.target;
     const intersections = getIntersections(controller);
     if (intersections.length > 0) {
         const intersection = intersections[0];
         const object = intersection.object;
-        // object.material.emissive.b = 1;
+        object.material.emissive.b = 1;
         controller.attach(object);
         controller.userData.selected = object;
     }
@@ -57,11 +58,12 @@ function onSelectStart1(event) {
 }
 
 function onSelectEnd1(event) {
-    // text_rotate = false;
+    text_rotate2 = false;
+    fire = false;
     const controller = event.target;
     if (controller.userData.selected !== undefined) {
         const object = controller.userData.selected;
-        // object.material.emissive.b = 0;
+        object.material.emissive.b = 0;
         textGroup.attach(object);
         controller.userData.selected = undefined;
     }

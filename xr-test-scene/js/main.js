@@ -112,6 +112,51 @@ let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma'
 let text_rotate = false;
 let tMeshs = [];
 
+let textGroup2;
+let texts2 = ['zero restrictions',
+  'surging virus',
+  'XBB',
+  'high infection',
+  'new cases',
+  'outbreaks',
+  'tested positive',
+  'deaths',
+  'the first wave',
+  'the second wave',
+  '“bad cold”',
+  'reopening',
+  'medical care',
+  'fatalities',
+  'avoiding Shanghai',
+  'death rate',
+  'protests',
+  'policies',
+  'freedom',
+  'low vaccination rates',
+  'zero restrictions',
+  'surging virus',
+  'XBB',
+  'high infection',
+  'new cases',
+  'outbreaks',
+  'tested positive',
+  'deaths',
+  'the first wave',
+  'the second wave',
+  '“bad cold”',
+  'reopening',
+  'medical care',
+  'fatalities',
+  'avoiding Shanghai',
+  'death rate',
+  'protests',
+  'policies',
+  'freedom',
+  'low vaccination rates'
+];
+let text_rotate2 = false;
+let tMeshs2 = [];
+
 let params = {
   // (add)
   drawCount: 0
@@ -131,6 +176,9 @@ const FB_SIZE = 8.0;
 let football;
 let objects = [];
 
+let sphereGroup;
+let sphereg_acc = 0; let sphereg_vel = 0.001;
+
 var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
 const TRANS1 = 7; const TRANS2 = TRANS1 + 3; const TRANS3 = TRANS2 + 26; const TRANS4 = TRANS3 + 40;
 const TRANS5 = TRANS4 + 40;
@@ -139,7 +187,7 @@ function setupThree() {
   // WebXR
   setupWebXR();
 
-  room = getSphere();
+  room = getRoom();
   scene.add(room);
 
   // enable shadow
@@ -162,6 +210,36 @@ function setupThree() {
 
   scene.add(textGroup);
 
+  // skydive scene
+  sphereGroup = new THREE.Group();
+  for (let i = 0; i < 1000; i++) {
+    let box = getSphere();
+    box.position.x = random(-WORLD_HALF * 2, WORLD_HALF * 2);
+    box.position.y = random(-WORLD_HALF, WORLD_HALF * 2);
+    box.position.z = random(-WORLD_HALF * 2, WORLD_HALF * 2);
+    const size = random(1, 10);
+    box.scale.x = size;
+    box.scale.y = size;
+    box.scale.z = size;
+    box.material.transparent = true;
+    box.material.opacity = random(0.1, 0.6);
+    sphereGroup.add(box);
+  }
+  sphereGroup.position.y = -1000;
+  scene.add(sphereGroup);
+
+  // covid scene
+  textGroup2 = new THREE.Group();
+  for (let t of texts2) {
+    const loader = new FontLoader();
+    loader.load('assets/font/Cinzel_Regular.json', function (font) {
+      let tMesh = getText(t, font);
+      textGroup2.add(tMesh);
+      // tMeshs.push(tMesh);
+    });
+  }
+  scene.add(textGroup2);
+
   // mirror
   mirror = getMirror();
   mirror.position.y = -200;
@@ -176,8 +254,10 @@ function updateThree() {
   currentTime += delta;
 
   // football.visible = false;
-  // textGroup.visible = false;
-  // mirror.visible = false;
+  textGroup.visible = false;
+  textGroup2.visible = false;
+  sphereGroup.visible = false;
+  mirror.visible = false;
 
   if (currentTime < TRANS1) {
     // football.visible = true;
@@ -213,17 +293,6 @@ function updateThree() {
       objects.push(object);
     }
 
-    // generate cubes in real time
-    // let numOfCubes = floor(random(1, 2));
-    // for (let i = 0; i < numOfCubes; i++) {
-    //   let object = new RandomObj()
-    //     .setPosition(0, 6, 0)
-    //     .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
-    //     .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
-    //     .setScale(random(0.3, 0.6));
-    //   objects.push(object);
-    // }
-
     // update the cubes
     for (let c of objects) {
       let gravity = createVector(0, -0.0001, 0);
@@ -245,26 +314,51 @@ function updateThree() {
     }
   }
 
-  cleanIntersected();
-  intersectObjects(controller1);
-  if (text_rotate) {
-    // console.log("rotate");
-    textGroup.rotation.y += 0.004; // rotate around the world center
+  if (currentTime >= TRANS1 && currentTime < TRANS2) {
+    console.log("scene 2");
+    for (let c in objects) {
+      scene.remove(c.mesh);
+      objects.splice(i, 1);
+    }
+    sphereGroup.visible = true;
+    // console.log(sphereGroup);
+    let offset = map(currentTime, TRANS1, TRANS2, 242, 171);
+    const roomColor = new THREE.Color(137 / 250, offset / 250, 1);
+    room.material.color = roomColor;
+
+    let sphereg_gravity = -0.01;
+    sphereg_acc += sphereg_gravity;
+    sphereg_vel += sphereg_acc;
+    sphereGroup.position.y -= sphereg_vel;
   }
 
-  if (fire) {
-    for (let i = 0; i < 2; i++) {
-      fireworks.push(new Firework(true));
+  if (currentTime >= TRANS2 && currentTime < TRANS3) {
+    const roomColor = new THREE.Color(1 / 250, 1 / 250, 1 / 250);
+    room.material.color = roomColor;
+    textGroup2.visible = true;
+    mirror.visible = true;
+    if (text_rotate2) {
+      textGroup2.rotation.y += 0.004;
     }
   }
-  if (random(1) < 0.02) {
-    fireworks.push(new Firework(false));
-  }
-  for (let f of fireworks) {
-    f.update();
-    f.show();
+
+  if (currentTime >= TRANS3 && currentTime < TRANS4) {
+    if (fire) {
+      for (let i = 0; i < 2; i++) {
+        fireworks.push(new Firework(true));
+      }
+    }
+    if (random(1) < 0.02) {
+      fireworks.push(new Firework(false));
+    }
+    for (let f of fireworks) {
+      f.update();
+      f.show();
+    }
   }
 
+  cleanIntersected();
+  intersectObjects(controller1);
 }
 
 let raycaster;
@@ -340,6 +434,15 @@ function getBox() {
   return mesh;
 }
 
+function getSphere() {
+  const geometry = new THREE.SphereGeometry(random(1, 3));
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x0c83fa
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  return mesh;
+}
+
 class Cube {
   constructor() {
     this.pos = createVector();
@@ -357,7 +460,7 @@ class Cube {
     this.lifeReduction = random(0.005, 0.010);
     this.isDone = false;
     //
-    this.mesh = getBox();
+    this.mesh = getSphere();
     scene.add(this.mesh);
   }
   setPosition(x, y, z) {
@@ -426,7 +529,7 @@ class Cube {
   }
 }
 
-function getSphere() {
+function getRoom() {
   const geometry = new THREE.SphereGeometry(1000, 32, 32); // 6
   const material = new THREE.MeshBasicMaterial({
     color: 0xfa9bdf, //color7
