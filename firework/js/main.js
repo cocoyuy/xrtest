@@ -73,7 +73,7 @@ function getFirework() {
 class Firework {
   constructor(user) {
     this.firework = new fParticle()
-      .setPosition(random(-600, 600), 0, 400)
+      .setPosition(random(-600, 600), 0, 600)
       .setVelocity(0, random(7, 9), 0)
       .setScale(5);
     this.exploded = false;
