@@ -140,9 +140,9 @@ function getText(content, font) {
     metalness: 0.0
   });
   const text = new THREE.Mesh(geometry, material);
-  text.position.y = random(10, 300);
-  text.position.x = random(-600, 600);
-  text.position.z = random(-600, 600);
+  text.position.y = random(10, 200);
+  text.position.x = random(-300, 300);
+  text.position.z = random(-300, 300);
   text.lookAt(0, 0, 100);
   // scene.add(text);
   return text;
