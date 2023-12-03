@@ -3,11 +3,13 @@ let fireworks = [];
 let gravity;
 let fire = false;
 let room;
+let fireworkSound;
 
 function setupThree() {
   // WebXR
   setupWebXR();
   gravity = createVector(0, -0.07, 0);
+  getFireworkSound('assets/firework.mp3');
   room = getSphere();
   scene.add(room);
 }
@@ -48,6 +50,26 @@ function onKeyUp(event) {
       break;
   }
 };
+
+function getFireworkSound(path) {
+  const audioListener = new THREE.AudioListener();
+  camera.add(audioListener);
+  fireworkSound = new THREE.Audio(audioListener);
+  scene.add(fireworkSound);
+  const sloader = new THREE.AudioLoader();
+  sloader.load(
+    path,
+    function (audioBuffer) {
+      fireworkSound.setBuffer(audioBuffer);
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (err) {
+      console.log('An error happened');
+    }
+  );
+}
 
 function getSphere() {
   const geometry = new THREE.SphereGeometry(800, 32, 32); // 6
@@ -101,6 +123,7 @@ class Firework {
     }
   }
   explode() {
+    fireworkSound.play();
     let pc;
     if (this.isUser) { pc = new THREE.Color(random(1), random(1), random(1)); }
     else { pc = new THREE.Color(1, 1, 1); }
