@@ -1,187 +1,34 @@
-let mirror;
-let textureCube;
-let texture;
-
+const WORLD_SIZE = 2000;
 const WORLD_HALF = 1000;
 const MOUNTAIN = 600;
-let plane;
-let lights = [];
 let room;
+let mirror;
 
-let textGroup;
-let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant',
-  'vacillate', 'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous',
-  'misanthrope',
-  'venerate',
-  'eulogy',
-  'lethargic',
-  'obdurate',
-  'philanthropic',
-  'garrulous',
-  'malleable',
-  'ostentation',
-  'prevaricate',
-  'prevaricate',
-  'eulogy',
-  'laconic',
-  'loquacious',
-  'cacophony',
-  'malleable',
-  'ephemeral',
-  'pedant',
-  'gullible',
-  'equivocal',
-  'lucid',
-  'precipitate',
-  'assuage',
-  'erudite',
-  'enigma',
-  'placate',
-  'zeal',
-  'audacious',
-  'gullible',
-  'pedant',
-  'vacillate',
-  'capricious',
-  'loquacious',
-  'pragmatic',
-  'volatile',
-  'ephemeral',
-  'laconic',
-  'cacophony',
-  'enervate',
-  'ingenuous',
-  'misanthrope',
-  'venerate',
-  'eulogy',
-  'lethargic',
-  'obdurate',
-  'philanthropic',
-  'garrulous',
-  'malleable',
-  'ostentation',
-  'prevaricate',
-  'prevaricate',
-  'eulogy',
-  'laconic',
-  'loquacious',
-  'cacophony',
-  'malleable',
-  'ephemeral',
-  'pedant',
-  'equivocal',
-  'lucid',
-  'precipitate',
-  'assuage',
-  'erudite',
-  'enigma',
-  'placate',
-  'zeal',
-  'audacious',
-  'gullible',
-  'pedant',
-  'vacillate',
-  'capricious',
-  'loquacious',
-  'pragmatic',
-  'volatile',
-  'ephemeral',
-  'laconic',
-  'cacophony',
-  'enervate',
-  'ingenuous',
-  'misanthrope',
-  'venerate',
-  'eulogy',
-  'lethargic',
-  'obdurate',
-  'philanthropic',
-  'garrulous',
-  'malleable',
-  'ostentation',
-  'prevaricate',
-  'prevaricate',
-  'eulogy',
-  'laconic',
-  'loquacious',
-  'cacophony',
-  'malleable',
-  'ephemeral',
-  'pedant'
+let textGroup; // gre vocabulary
+let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'gullible', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious',
+  'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate',
+  'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant'
 ];
-let text_rotate = false;
-let tMeshs = [];
+let text_rotate = false; // not used when drag
 
-let textGroup2;
-let texts2 = ['zero restrictions',
-  'surging virus',
-  'XBB',
-  'high infection',
-  'new cases',
-  'outbreaks',
-  'tested positive',
-  'deaths',
-  'the first wave',
-  'the second wave',
-  '“bad cold”',
-  'reopening',
-  'medical care',
-  'fatalities',
-  'avoiding Shanghai',
-  'death rate',
-  'protests',
-  'policies',
-  'freedom',
-  'low vaccination rates',
-  'zero restrictions',
-  'surging virus',
-  'XBB',
-  'high infection',
-  'new cases',
-  'outbreaks',
-  'tested positive',
-  'deaths',
-  'the first wave',
-  'the second wave',
-  '“bad cold”',
-  'reopening',
-  'medical care',
-  'fatalities',
-  'avoiding Shanghai',
-  'death rate',
-  'protests',
-  'policies',
-  'freedom',
-  'low vaccination rates'
+let textGroup2; let text_rotate2 = false;
+let texts2 = ['zero restrictions', 'surging virus', 'XBB', 'high infection', 'new cases', 'outbreaks', 'tested positive', 'deaths', 'the first wave', 'the second wave', '“bad cold”', 'reopening', 'medical care', 'fatalities', 'avoiding Shanghai', 'death rate', 'protests',
+  'policies', 'freedom', 'low vaccination rates', 'zero restrictions', 'surging virus', 'XBB', 'high infection', 'new cases', 'outbreaks', 'tested positive', 'deaths', 'the first wave', 'the second wave', '“bad cold”', 'reopening', 'medical care', 'fatalities', 'avoiding Shanghai', 'death rate', 'protests', 'policies', 'freedom', 'low vaccination rates'
 ];
-let text_rotate2 = false;
-let tMeshs2 = [];
 
-let params = {
-  // (add)
-  drawCount: 0
-};
+let fireworks = []; let gravity; let fire = false;
 
-const MAX_PARTICLE_NUMBER = 600;
-let pointCloud;
-let particles = [];
-let color7;
+const FB_SIZE = 8.0; let football; let objects = [];
 
-const WORLD_SIZE = 2000;
-let fireworks = [];
-let gravity;
-let fire = false;
+let sphereGroup; let sphereg_acc = 0; let sphereg_vel = 0.001;
 
-const FB_SIZE = 8.0;
-let football;
-let objects = [];
-
-let sphereGroup;
-let sphereg_acc = 0; let sphereg_vel = 0.001;
+let dessert; let mosque; let seagull; let mixer;
+let loaded = false; // not used
+let shanghai; let buildingGroup;
 
 var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
-const TRANS1 = 7; const TRANS2 = TRANS1 + 3; const TRANS3 = TRANS2 + 26; const TRANS4 = TRANS3 + 40;
-const TRANS5 = TRANS4 + 40;
+const TRANS1 = 7; const TRANS2 = TRANS1 + 3; const TRANS3 = TRANS2 + 26; const TRANS4 = TRANS3 + 30;
+const TRANS5 = TRANS4 + 30; const TRANS6 = TRANS5 + 30; const TRANS7 = TRANS6 + 30; const TRANS8 = TRANS7 + 30;
 
 function setupThree() {
   // WebXR
@@ -197,18 +44,13 @@ function setupThree() {
   gravity = createVector(0, -0.07, 0);
 
   textGroup = new THREE.Group();
-
-  // text 
   for (let t of texts) {
     const loader = new FontLoader();
     loader.load('assets/font/Cinzel_Regular.json', function (font) {
       let tMesh = getText(t, font);
       textGroup.add(tMesh);
-      // tMeshs.push(tMesh);
     });
   }
-
-  scene.add(textGroup);
 
   // skydive scene
   sphereGroup = new THREE.Group();
@@ -235,16 +77,31 @@ function setupThree() {
     loader.load('assets/font/Cinzel_Regular.json', function (font) {
       let tMesh = getText(t, font);
       textGroup2.add(tMesh);
-      // tMeshs.push(tMesh);
     });
   }
   scene.add(textGroup2);
+
+  // shanghai landscape
+  buildingGroup = new THREE.Group();
+  const distance = 80;
+  for (let z = -WORLD_HALF; z <= WORLD_HALF; z += distance) {
+    for (let x = -WORLD_HALF; x <= WORLD_HALF; x += distance) {
+      if (x ** 2 + z ** 2 > MOUNTAIN ** 2) {
+        let building = getBuilding();
+        building.position.x = x + random(-20, 20);
+        building.position.y = -200;
+        building.position.z = z + random(-20, 20);
+        buildingGroup.add(building);
+      }
+    }
+  }
 
   // mirror
   mirror = getMirror();
   mirror.position.y = -200;
 
   getFootballModel("assets/football/scene.gltf");
+  loadShanghai("assets/shanghai/scene.gltf");
 
 }
 
@@ -254,7 +111,6 @@ function updateThree() {
   currentTime += delta;
 
   // football.visible = false;
-  textGroup.visible = false;
   textGroup2.visible = false;
   sphereGroup.visible = false;
   mirror.visible = false;
@@ -325,7 +181,6 @@ function updateThree() {
     let offset = map(currentTime, TRANS1, TRANS2, 242, 171);
     const roomColor = new THREE.Color(137 / 250, offset / 250, 1);
     room.material.color = roomColor;
-
     let sphereg_gravity = -0.01;
     sphereg_acc += sphereg_gravity;
     sphereg_vel += sphereg_acc;
@@ -333,6 +188,20 @@ function updateThree() {
   }
 
   if (currentTime >= TRANS2 && currentTime < TRANS3) {
+    console.log("scene 3");
+    sphereGroup.visible = true;
+    let R_offset = map(currentTime, TRANS2, TRANS3, 137, 1); //39
+    let G_offset = map(currentTime, TRANS2, TRANS3, 171, 1); //49
+    let B_offset = map(currentTime, TRANS2, TRANS3, 250, 1); //71
+    const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
+    room.material.color = roomColor;
+    sphereGroup.position.x = cos(frame * 0.010) * 300;
+    sphereGroup.position.y = sin(frame * 0.005) * 100 - map(currentTime, 4, 30, WORLD_HALF, 0);
+    sphereGroup.rotation.y = cos(frame * 0.010) * PI / 24;
+    sphereGroup.rotation.z = cos(frame * 0.007) * PI / 24;
+  }
+
+  if (currentTime >= TRANS3 && currentTime < TRANS4) {
     const roomColor = new THREE.Color(1 / 250, 1 / 250, 1 / 250);
     room.material.color = roomColor;
     textGroup2.visible = true;
@@ -342,7 +211,14 @@ function updateThree() {
     }
   }
 
-  if (currentTime >= TRANS3 && currentTime < TRANS4) {
+  if (currentTime >= TRANS4 && currentTime < TRANS5) {
+    let R_offset = map(currentTime, TRANS4, TRANS5, 1, 250);
+    let G_offset = map(currentTime, TRANS4, TRANS5, 1, 179);
+    let B_offset = map(currentTime, TRANS4, TRANS5, 1, 239);
+    const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
+    room.material.color = roomColor;
+
+    mirror.visible = true;
     if (fire) {
       for (let i = 0; i < 2; i++) {
         fireworks.push(new Firework(true));
@@ -354,6 +230,83 @@ function updateThree() {
     for (let f of fireworks) {
       f.update();
       f.show();
+    }
+  }
+
+  if (currentTime >= TRANS5 && currentTime < TRANS6) {
+    for (let f in fireworks) {
+      scene.remove(f.mesh);
+      fireworks.splice(f, 1); //
+    }
+    scene.add(textGroup);
+    mirror.visible = true;
+    let R_offset = map(currentTime, TRANS5, TRANS6, 250, 181);
+    let G_offset = map(currentTime, TRANS5, TRANS6, 179, 79);
+    let B_offset = map(currentTime, TRANS5, TRANS6, 239, 5);
+    const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
+    room.material.color = roomColor;
+    // drag texts
+  }
+
+  if (currentTime >= TRANS6 && currentTime < TRANS7) {
+    scene.remove(textGroup);
+    let R_offset = map(currentTime, TRANS6, TRANS7, 181, 38); // 181
+    let G_offset = map(currentTime, TRANS6, TRANS7, 79, 16); // 79
+    let B_offset = map(currentTime, TRANS6, TRANS7, 5, 1); // 5
+    const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
+    room.material.color = roomColor;
+
+    dessert = getDessert();
+    dessert.rotation.x = PI / 2 * 3;
+    dessert.position.y = -200;
+
+    if (loaded == false) {
+      loadMosque("assets/blue_mosque/scene.gltf");
+      loadSeagull("assets/seagulls/scene.gltf");
+      loaded = true;
+    }
+
+    if (mosque !== undefined) {
+      mosque.position.z = -400;
+      mosque.position.x = -100;
+      mosque.position.y = 0;
+      mosque.rotation.z = PI / 10;
+      mosque.scale.x = 80.0;
+      mosque.scale.y = 80.0;
+      mosque.scale.z = 80.0;
+    }
+
+    if (seagull !== undefined) {
+      seagull.position.x = 400;
+      seagull.position.z = -1000;
+      seagull.position.y = 200;
+      seagull.scale.x = 30.0;
+      seagull.scale.y = 30.0;
+      seagull.scale.z = 30.0;
+      mixer.update(delta); // update seagulls animation
+    }
+  }
+
+  if (currentTime >= TRANS7 && currentTime < TRANS8) {
+    let R_offset = map(currentTime, TRANS7, TRANS8, 1, 109);
+    let G_offset = map(currentTime, TRANS7, TRANS8, 1, 220);
+    let B_offset = map(currentTime, TRANS7, TRANS8, 1, 237);
+    const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
+    room.material.color = roomColor;
+    scene.remove(seagull);
+    scene.remove(dessert);
+    scene.remove(mosque);
+    mirror.visible = true;
+    scene.add(shanghai);
+    scene.add(buildingGroup);
+
+    if (shanghai !== undefined) {
+      shanghai.position.z = -600;
+      shanghai.position.y = -250;
+      shanghai.scale.x = 700.0;
+      shanghai.scale.y = 700.0;
+      shanghai.scale.z = 700.0;
+      shanghai.rotation.z = PI / 7 * 6;
     }
   }
 
@@ -425,6 +378,104 @@ function updateCamera() {
   camera.updateProjectionMatrix();
 }
 
+function loadShanghai(filepath) {
+  const loader = new GLTFLoader();
+  loader.load(
+    filepath,
+    function (gltfData) {
+      shanghai = gltfData.scene.children[0];
+      shanghai.material = new THREE.MeshBasicMaterial({ //Matcap
+        color: 0x080808,
+      });
+      // scene.add(shanghai);
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (err) {
+      console.error('An error happened');
+    }
+  );
+}
+
+function getBuilding() {
+  let geometry = new THREE.BoxGeometry(30, random(60, 180), 30);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x080808,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  // scene.add(mesh);
+  return mesh;
+}
+
+function loadMosque(filepath) {
+  const loader = new GLTFLoader();
+  loader.load(
+    filepath,
+    function (gltfData) {
+      mosque = gltfData.scene.children[0];
+      mosque.material = new THREE.MeshBasicMaterial({ //Matcap
+        color: 0x080808,
+      });
+      scene.add(mosque);
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (err) {
+      console.error('An error happened');
+    }
+  );
+}
+
+function loadSeagull(filepath) {
+  const loader = new GLTFLoader();
+  loader.load(
+    filepath,
+    function (gltfData) {
+      seagull = gltfData.scene.children[0];
+      const animations = gltfData.animations; //
+      mixer = new THREE.AnimationMixer(seagull);
+      const action = mixer.clipAction(animations[0]); // play the first animation
+      action.play();
+
+      seagull.material = new THREE.MeshBasicMaterial({ //Matcap
+        color: 0x080808,
+      });
+      scene.add(seagull);
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (err) {
+      console.error('An error happened');
+    }
+  );
+}
+
+function getDessert() {
+  let geometry = new THREE.PlaneGeometry(WORLD_HALF * 2, WORLD_HALF * 2, 100, 100);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x080808,
+    side: THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  let posArray = geometry.attributes.position.array;
+  for (let i = 0; i < posArray.length; i += 3) {
+    let x = posArray[i + 0];
+    let y = posArray[i + 1];
+    let z = posArray[i + 2];
+    let temp = x ** 2 + y ** 2;
+    let xOffset = (x + WORLD_HALF) * 0.005;
+    let yOffset = (y + WORLD_HALF) * 0.005;
+    let amp = 12;
+    let noiseValue = (noise(xOffset, yOffset) * amp) ** 2;
+    posArray[i + 2] = noiseValue;
+  }
+  scene.add(mesh);
+  return mesh;
+}
+
 function getBox() {
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshLambertMaterial({
@@ -437,7 +488,9 @@ function getBox() {
 function getSphere() {
   const geometry = new THREE.SphereGeometry(random(1, 3));
   const material = new THREE.MeshBasicMaterial({
-    color: 0x0c83fa
+    color: 0x0c83fa,
+    transparent: true,
+    opacity: 0.5
   });
   const mesh = new THREE.Mesh(geometry, material);
   return mesh;
@@ -587,9 +640,9 @@ function getFirework() {
 class Firework {
   constructor(user) {
     this.firework = new fParticle()
-      .setPosition(random(-600, 600), 0, 600)
+      .setPosition(random(-300, 300), -200, 800)
       .setVelocity(0, random(7, 9), 0)
-      .setScale(5);
+      .setScale(3);
     this.exploded = false;
     this.particles = [];
     this.isUser = user;

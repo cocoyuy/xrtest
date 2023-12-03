@@ -1,0 +1,11 @@
+Model Information:
+* title:	Shah Alam, Blue Mosque
+* source:	https://sketchfab.com/3d-models/shah-alam-blue-mosque-3c61f7edc9d6436db22722b37dfdb696
+* author:	Dolores (https://sketchfab.com/upto21)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Shah Alam, Blue Mosque" (https://sketchfab.com/3d-models/shah-alam-blue-mosque-3c61f7edc9d6436db22722b37dfdb696) by Dolores (https://sketchfab.com/upto21) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
