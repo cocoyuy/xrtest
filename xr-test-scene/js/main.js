@@ -232,9 +232,9 @@ function updateThree() {
         fireworks.push(new Firework(true));
       }
     }
-    if (random(1) < 0.02) {
-      fireworks.push(new Firework(false));
-    }
+    // if (random(1) < 0.02) {
+    //   fireworks.push(new Firework(false));
+    // }
     for (let f of fireworks) {
       f.update();
       f.show();
@@ -648,7 +648,7 @@ function getFirework() {
 class Firework {
   constructor(user) {
     this.firework = new fParticle()
-      .setPosition(random(-300, 300), -200, 800)
+      .setPosition(random(-300, 300), -200, -800)
       .setVelocity(0, random(7, 9), 0)
       .setScale(3);
     this.exploded = false;

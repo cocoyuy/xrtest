@@ -4,6 +4,8 @@ let gravity;
 let fire = false;
 let room;
 let fireworkSound;
+// let particles = [];
+const MAX_PARTICLE_NUMBER = 6;
 
 function setupThree() {
   // WebXR
@@ -12,21 +14,60 @@ function setupThree() {
   getFireworkSound('assets/firework.mp3');
   room = getSphere();
   scene.add(room);
+  // Points
+  pointCloud = getPoints(MAX_PARTICLE_NUMBER);
+  scene.add(pointCloud);
 }
 
 function updateThree() {
+  // user interaction
   if (fire) {
+    // for (let i = 0; i < 2; i++) {
+    //   fireworks.push(new Firework(true));
+    // }
     for (let i = 0; i < 2; i++) {
-      fireworks.push(new Firework(true));
+      let tParticle = new Firework(false);
+      fireworks.push(tParticle);
     }
   }
-  if (random(1) < 0.02) {
-    fireworks.push(new Firework(false));
+
+  // generate more particles
+  // if (random(1) < 0.02) {
+  //   fireworks.push(new Firework(false));
+  // }
+  if (fireworks.length < MAX_PARTICLE_NUMBER) {
+    let tParticle = new Firework(false);
+    fireworks.push(tParticle);
   }
-  for (let f of fireworks) {
+
+  // update the firework
+  for (let i = 0; i < fireworks.length; i++) {
+    let f = fireworks[i];
     f.update();
-    f.show();
   }
+  // for (let f of fireworks) {
+  //   f.update();
+  //   // f.show();
+  // }
+
+  // then update the points
+  let positionArray = pointCloud.geometry.attributes.position.array;
+  let colorArray = pointCloud.geometry.attributes.color.array;
+  for (let i = 0; i < fireworks.length; i++) {
+    let p = fireworks[i];
+    let ptIndex = i * 3;
+    // position
+    positionArray[ptIndex + 0] = p.pos.x;
+    positionArray[ptIndex + 1] = p.pos.y;
+    positionArray[ptIndex + 2] = p.pos.z;
+    //color
+    colorArray[ptIndex + 0] = 1.0 * p.lifespan;
+    colorArray[ptIndex + 1] = 0.5 * p.lifespan;
+    colorArray[ptIndex + 2] = 0.1 * p.lifespan;
+  }
+  pointCloud.geometry.setDrawRange(0, fireworks.length); // ***
+  pointCloud.geometry.attributes.position.needsUpdate = true;
+  pointCloud.geometry.attributes.color.needsUpdate = true;
 }
 
 // event listeners
@@ -51,6 +92,36 @@ function onKeyUp(event) {
   }
 };
 
+function getPoints(number) {
+  const vertices = new Float32Array(number * 3);
+  const colors = new Float32Array(number * 3);
+
+  // geometry
+  const geometry = new THREE.BufferGeometry();
+  // attributes
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  // draw range
+  const drawCount = number; // draw the whole objects
+  geometry.setDrawRange(0, drawCount);
+  // geometry
+  // const texture = new THREE.TextureLoader().load('assets/particle_texture.jpg');
+  const material = new THREE.PointsMaterial({
+    //color: 0xFF9911,
+    vertexColors: true,
+    size: 0.1,
+    sizeAttenuation: true, // default
+    opacity: 0.9,
+    transparent: true,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
+    // map: texture
+  });
+  // Points
+  const points = new THREE.Points(geometry, material);
+  return points;
+}
+
 function getFireworkSound(path) {
   const audioListener = new THREE.AudioListener();
   camera.add(audioListener);
@@ -72,7 +143,7 @@ function getFireworkSound(path) {
 }
 
 function getSphere() {
-  const geometry = new THREE.SphereGeometry(800, 32, 32); // 6
+  const geometry = new THREE.SphereGeometry(1000, 32, 32); // 6
   const material = new THREE.MeshBasicMaterial({
     color: 0x575757,
     side: THREE.DoubleSide
@@ -123,7 +194,7 @@ class Firework {
     }
   }
   explode() {
-    fireworkSound.play();
+    // fireworkSound.play();
     let pc;
     if (this.isUser) { pc = new THREE.Color(random(1), random(1), random(1)); }
     else { pc = new THREE.Color(1, 1, 1); }
@@ -138,14 +209,14 @@ class Firework {
       this.particles.push(p);
     }
   }
-  show() {
-    if (!this.exploded) {
-      this.firework.show();
-    }
-    for (let f of this.particles) {
-      f.show();
-    }
-  }
+  // show() {
+  //   if (!this.exploded) {
+  //     this.firework.show();
+  //   }
+  //   for (let f of this.particles) {
+  //     f.show();
+  //   }
+  // }
 }
 
 class fParticle {
@@ -155,10 +226,12 @@ class fParticle {
     this.acc = createVector();
     this.scl = createVector(1, 1, 1);
     this.mass = this.scl.x * this.scl.y * this.scl.z;
-    this.mesh = getFirework();
+    this.mesh = getPoints();
     this.exploded = false;
     this.particles = [];
     this.lifespan = 1.0;
+    this.lifeReduction = random(0.001, 0.005);
+    this.isDone = false;
   }
   setPosition(x, y, z) {
     this.pos = createVector(x, y, z);
@@ -187,8 +260,8 @@ class fParticle {
     // force.div(this.mass);
     this.acc.add(f);
   }
-  show() {
-    this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
-  }
+  // show() {
+  //   this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
+  // }
 }
 

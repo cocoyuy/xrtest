@@ -9,6 +9,9 @@ let cubes = [];
 let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'gullible', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious'
 ];
 
+let audioElement;
+let audioCtx;
+
 function setupThree() {
   // renderer additional setup
   renderer.shadowMap.enabled = true;
@@ -56,6 +59,9 @@ function setupThree() {
   // gui
   gui.add(params, "cubes", 0, 5000).step(1).listen();
   gui.add(params, "scene_children", 0, 5000).step(1).listen();
+
+  // audio
+  initAudio();
 }
 
 function updateThree() {
@@ -67,6 +73,19 @@ function updateThree() {
 
 
 ///// UTILS /////
+
+function initAudio() {
+  // if (audioCtx !== null) {
+  //   return;
+  // }
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  audioElement = new Audio('assets/font/Scene1.mp3');
+
+  audioElement.loop = true;
+  audioElement.play();
+  console.log("audio play");
+}
 
 function getRoom() {
   const geometry = new THREE.SphereGeometry(800, 32, 32);
