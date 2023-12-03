@@ -72,6 +72,9 @@ function onSelectEnd(event) {
 
     const object = controller.userData.selected;
     object.material.emissive.b = 0;
+    const doneColor = new THREE.Color(0x04b015);
+    //04b015
+    object.material.color.set(doneColor);
     group.attach(object);
 
     controller.userData.selected = undefined;
