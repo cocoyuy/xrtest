@@ -22,7 +22,7 @@ const FB_SIZE = 8.0; let football; let objects = [];
 
 let sphereGroup; let sphereg_acc = 0; let sphereg_vel = 0.001;
 
-let dessert; let mosque; let seagull; let mixer;
+let desert; let mosque; let seagull; let mixer;
 let loaded = false; // not used
 let shanghai; let buildingGroup;
 
@@ -57,14 +57,13 @@ function setupThree() {
   for (let i = 0; i < 1000; i++) {
     let box = getSphere();
     box.position.x = random(-WORLD_HALF * 2, WORLD_HALF * 2);
-    box.position.y = random(-WORLD_HALF, WORLD_HALF * 2);
+    box.position.y = random(-WORLD_HALF * 5, WORLD_HALF);
     box.position.z = random(-WORLD_HALF * 2, WORLD_HALF * 2);
     const size = random(1, 10);
     box.scale.x = size;
     box.scale.y = size;
     box.scale.z = size;
-    box.material.transparent = true;
-    box.material.opacity = random(0.1, 0.6);
+    // box.material.opacity = random(0.1, 0.6);
     sphereGroup.add(box);
   }
   sphereGroup.position.y = -1000;
@@ -170,6 +169,7 @@ function updateThree() {
     }
   }
 
+  // skydive gravity fall
   if (currentTime >= TRANS1 && currentTime < TRANS2) {
     console.log("scene 2");
     for (let c in objects) {
@@ -177,6 +177,12 @@ function updateThree() {
       objects.splice(i, 1);
     }
     sphereGroup.visible = true;
+    // if (currentTime < TRANS1 + 1) {
+    //   console.log("sphere group: " + sphereGroup);
+    //   let sphereOpacity = map(currentTime, TRANS1, TRANS1 + 1, 1, 0.5);
+    //   sphereGroup.material.opacity = sphereOpacity;
+    // }
+
     // console.log(sphereGroup);
     let offset = map(currentTime, TRANS1, TRANS2, 242, 171);
     const roomColor = new THREE.Color(137 / 250, offset / 250, 1);
@@ -187,6 +193,7 @@ function updateThree() {
     sphereGroup.position.y -= sphereg_vel;
   }
 
+  // skydive swing
   if (currentTime >= TRANS2 && currentTime < TRANS3) {
     console.log("scene 3");
     sphereGroup.visible = true;
@@ -201,6 +208,7 @@ function updateThree() {
     sphereGroup.rotation.z = cos(frame * 0.007) * PI / 24;
   }
 
+  // covid news
   if (currentTime >= TRANS3 && currentTime < TRANS4) {
     const roomColor = new THREE.Color(1 / 250, 1 / 250, 1 / 250);
     room.material.color = roomColor;
@@ -256,9 +264,9 @@ function updateThree() {
     const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
     room.material.color = roomColor;
 
-    dessert = getDessert();
-    dessert.rotation.x = PI / 2 * 3;
-    dessert.position.y = -200;
+    desert = getDesert();
+    desert.rotation.x = PI / 2 * 3;
+    desert.position.y = -200;
 
     if (loaded == false) {
       loadMosque("assets/blue_mosque/scene.gltf");
@@ -294,7 +302,7 @@ function updateThree() {
     const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
     room.material.color = roomColor;
     scene.remove(seagull);
-    scene.remove(dessert);
+    scene.remove(desert);
     scene.remove(mosque);
     mirror.visible = true;
     scene.add(shanghai);
@@ -453,7 +461,7 @@ function loadSeagull(filepath) {
   );
 }
 
-function getDessert() {
+function getDesert() {
   let geometry = new THREE.PlaneGeometry(WORLD_HALF * 2, WORLD_HALF * 2, 100, 100);
   const material = new THREE.MeshBasicMaterial({
     color: 0x080808,

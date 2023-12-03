@@ -6,9 +6,7 @@ let params = {
 let room;
 let cubes = [];
 
-let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'gullible', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious',
-  'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate',
-  'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant'
+let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant', 'gullible', 'equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma', 'placate', 'zeal', 'audacious', 'gullible', 'pedant', 'vacillate', 'capricious', 'loquacious'
 ];
 
 function setupThree() {
@@ -106,14 +104,24 @@ function updateThree() {
 
 ///// UTILS /////
 
+// function getRoom() {
+//   const geometry = new BoxLineGeometry(6, 6, 6, 10, 10, 10).translate(0, 3, 0);
+//   const materials = new THREE.LineBasicMaterial({
+//     color: 0xbcbcbc,
+//     transparent: true,
+//     opacity: 0.5,
+//   });
+//   const mesh = new THREE.LineSegments(geometry, materials);
+//   return mesh;
+// }
+
 function getRoom() {
-  const geometry = new BoxLineGeometry(6, 6, 6, 10, 10, 10).translate(0, 3, 0);
-  const materials = new THREE.LineBasicMaterial({
-    color: 0xbcbcbc,
-    transparent: true,
-    opacity: 0.5,
+  const geometry = new THREE.SphereGeometry(800, 32, 32);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x98c9fa,
+    side: THREE.DoubleSide
   });
-  const mesh = new THREE.LineSegments(geometry, materials);
+  const mesh = new THREE.Mesh(geometry, material);
   return mesh;
 }
 
@@ -123,8 +131,13 @@ function getText(content, font) {
     size: random(10, 15),
     height: 5,
   });
-  const material = new THREE.MeshBasicMaterial({
+  // const material = new THREE.MeshBasicMaterial({
+  //   color: 0x923e96,
+  // });
+  const material = new THREE.MeshStandardMaterial({
     color: 0x923e96,
+    roughness: 0.7,
+    metalness: 0.0
   });
   const text = new THREE.Mesh(geometry, material);
   text.position.y = random(10, 300);
