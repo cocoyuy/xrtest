@@ -74,7 +74,7 @@ function getFireworkSound(path) {
 function getSphere() {
   const geometry = new THREE.SphereGeometry(800, 32, 32); // 6
   const material = new THREE.MeshBasicMaterial({
-    color: 0x575757, //color7
+    color: 0x575757,
     side: THREE.DoubleSide
   });
   const mesh = new THREE.Mesh(geometry, material);
@@ -95,7 +95,7 @@ function getFirework() {
 class Firework {
   constructor(user) {
     this.firework = new fParticle()
-      .setPosition(random(-600, 600), 0, 600)
+      .setPosition(random(-600, 600), 0, -600)
       .setVelocity(0, random(7, 9), 0)
       .setScale(5);
     this.exploded = false;
