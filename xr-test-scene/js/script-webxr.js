@@ -43,7 +43,7 @@ function setupWebXR() {
 }
 
 function onSelectStart(event) {
-    text_rotate2 = true;
+    shoot = true;
     // fire = true;
     const controller = event.target;
     const intersections = getIntersections(controller);
@@ -60,7 +60,7 @@ function onSelectStart(event) {
 }
 
 function onSelectEnd(event) {
-    text_rotate2 = false;
+    shoot = false;
     // fire = false;
     const controller = event.target;
     if (controller.userData.selected !== undefined) {

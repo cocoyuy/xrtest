@@ -18,6 +18,7 @@ function setupThree() {
 
   // room
   room = getRoom();
+  room.position.y = -200;
   scene.add(room);
 
   // lights
@@ -47,9 +48,13 @@ function setupThree() {
 }
 
 function updateThree() {
+  // camera.position.x = 0;
+  // camera.position.y = 0;
+  // camera.position.z = 0;
+
   if (shoot) {
     let tCube = new Cube()
-      .setPosition(random(-6, 6), 4, random(-6, 6))
+      .setPosition(random(-50, 50), random(3, 7), random(-50, 50))
       // .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
       .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
       .setScale(random(0.5, 1));
@@ -57,24 +62,24 @@ function updateThree() {
   }
 
   // generate cubes by controller
-  if (controller.userData.isSelecting === true) {
-    // controller's position and direction
-    const position = controller.position;
-    // const direction = new THREE.Vector3(0, 0, -1); // default direction
-    // direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
+  // if (controller.userData.isSelecting === true) {
+  //   // controller's position and direction
+  //   const position = controller.position;
+  //   // const direction = new THREE.Vector3(0, 0, -1); // default direction
+  //   // direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
 
-    // generate a cube using the position and direction      
-    let tCube = new Cube()
-      .setPosition(position.x, position.y, position.z)
-      .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
-      .setScale(random(0.5, 1));
-    // .setPosition(position.x, position.y, position.z)
-    // .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
-    // .setAcc(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
-    // .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
-    // .setScale(random(0.5, 1.0));
-    cubes.push(tCube);
-  }
+  //   // generate a cube using the position and direction      
+  //   let tCube = new Cube()
+  //     .setPosition(position.x, position.y, position.z)
+  //     .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
+  //     .setScale(random(0.5, 1));
+  //   // .setPosition(position.x, position.y, position.z)
+  //   // .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
+  //   // .setAcc(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
+  //   // .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
+  //   // .setScale(random(0.5, 1.0));
+  //   cubes.push(tCube);
+  // }
 
   // update the cubes
   for (let c of cubes) {
@@ -166,9 +171,9 @@ function loadGLTF(filepath) {
       console.log(fb);
       fb.material = new THREE.MeshMatcapMaterial({ //
       });
-      fb.scale.x = 0.5;
-      fb.scale.y = 0.5;
-      fb.scale.z = 0.5;
+      fb.scale.x = 0.2;
+      fb.scale.y = 0.2;
+      fb.scale.z = 0.2;
       // scene.add(model);
     },
     function (xhr) {
@@ -189,9 +194,9 @@ function loadGLTF_wc(filepath) {
       console.log(wc);
       wc.material = new THREE.MeshMatcapMaterial({
       });
-      // wc.scale.x = 0.2;
-      // wc.scale.y = 0.2;
-      // wc.scale.z = 0.2;
+      wc.scale.x = 0.2;
+      wc.scale.y = 0.2;
+      wc.scale.z = 0.2;
       // scene.add(model);
     },
     function (xhr) {
@@ -325,7 +330,7 @@ class Cube {
     }
   }
   update() {
-    if (this.pos.y < 0) {
+    if (this.pos.y < -200) {
       this.pos.y = 0;
       this.vel.y *= -1;
       // this.acc.y *= 1.0001;
