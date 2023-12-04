@@ -6,8 +6,8 @@ function setupWebXR() {
 
     // controller 
     controller1 = renderer.xr.getController(0);
-    controller1.addEventListener('selectstart', onSelectStart1); // when the trigger is pressed
-    controller1.addEventListener('selectend', onSelectEnd1); // when the trigger is released
+    controller1.addEventListener('selectstart', onSelectStart); // when the trigger is pressed
+    controller1.addEventListener('selectend', onSelectEnd); // when the trigger is released
     scene.add(controller1);
 
     controller2 = renderer.xr.getController(1);
@@ -42,37 +42,41 @@ function setupWebXR() {
     raycaster = new THREE.Raycaster();
 }
 
-function onSelectStart1(event) {
+function onSelectStart(event) {
     text_rotate2 = true;
-    fire = true;
+    // fire = true;
     const controller = event.target;
     const intersections = getIntersections(controller);
     if (intersections.length > 0) {
         const intersection = intersections[0];
         const object = intersection.object;
-        object.material.emissive.b = 1;
+        // object.material.emissive.b = 1;
+        const doneColor = new THREE.Color(0x04b015);
+        object.material.color.set(doneColor);
         controller.attach(object);
         controller.userData.selected = object;
     }
     controller.userData.targetRayMode = event.data.targetRayMode;
 }
 
-function onSelectEnd1(event) {
+function onSelectEnd(event) {
     text_rotate2 = false;
-    fire = false;
+    // fire = false;
     const controller = event.target;
     if (controller.userData.selected !== undefined) {
         const object = controller.userData.selected;
-        object.material.emissive.b = 0;
+        // object.material.emissive.b = 0;
+        const doneColor = new THREE.Color(0x04b015);
+        object.material.color.set(doneColor);
         textGroup.attach(object);
         controller.userData.selected = undefined;
     }
 }
 
-function onSelectStart(event) {
-    this.userData.isSelecting = true;
-}
+// function onSelectStart(event) {
+//     this.userData.isSelecting = true;
+// }
 
-function onSelectEnd(event) {
-    this.userData.isSelecting = false;
-}
+// function onSelectEnd(event) {
+//     this.userData.isSelecting = false;
+// }

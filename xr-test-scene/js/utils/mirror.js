@@ -1,5 +1,5 @@
 function getMirror() {
-    const geometry = new THREE.CircleGeometry(600, 64);
+    const geometry = new THREE.CircleGeometry(1000, 64);
     groundMirror = new Reflector(geometry, {
         clipBias: 0.003,
         textureWidth: window.innerWidth * window.devicePixelRatio,

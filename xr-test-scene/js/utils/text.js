@@ -4,8 +4,13 @@ function getText(content, font) {
         size: random(10, 15),
         height: 5,
     });
-    const material = new THREE.MeshBasicMaterial({
+    // const material = new THREE.MeshBasicMaterial({
+    //     color: 0x923e96,
+    // });
+    const material = new THREE.MeshStandardMaterial({
         color: 0x923e96,
+        roughness: 0.7,
+        metalness: 0.0
     });
     const text = new THREE.Mesh(geometry, material);
     text.position.y = random(10, 300);

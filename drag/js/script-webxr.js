@@ -55,6 +55,7 @@ function startXRSession() {
       // Handle any errors
       console.error('Failed to request XR session:', error);
     });
+  fireworkSound.play();
 }
 
 function onSelectStart(event) {

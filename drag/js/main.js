@@ -11,6 +11,7 @@ let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma'
 
 let audioElement;
 let audioCtx;
+let fireworkSound;
 
 function setupThree() {
   // renderer additional setup
@@ -61,7 +62,8 @@ function setupThree() {
   gui.add(params, "scene_children", 0, 5000).step(1).listen();
 
   // audio
-  initAudio();
+  // initAudio();
+  getFireworkSound('assets/font/Scene1.mp3');
 }
 
 function updateThree() {
@@ -73,6 +75,26 @@ function updateThree() {
 
 
 ///// UTILS /////
+
+function getFireworkSound(path) {
+  const audioListener = new THREE.AudioListener();
+  camera.add(audioListener);
+  fireworkSound = new THREE.Audio(audioListener);
+  scene.add(fireworkSound);
+  const sloader = new THREE.AudioLoader();
+  sloader.load(
+    path,
+    function (audioBuffer) {
+      fireworkSound.setBuffer(audioBuffer);
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (err) {
+      console.log('An error happened');
+    }
+  );
+}
 
 function initAudio() {
   // if (audioCtx !== null) {
