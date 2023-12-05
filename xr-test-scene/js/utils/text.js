@@ -10,7 +10,9 @@ function getText(content, font) {
     const material = new THREE.MeshStandardMaterial({
         color: 0x923e96,
         roughness: 0.7,
-        metalness: 0.0
+        metalness: 0.0,
+        transparent: true,
+        opacity: 0
     });
     const text = new THREE.Mesh(geometry, material);
     text.position.y = random(10, 300);

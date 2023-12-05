@@ -6,9 +6,11 @@ function setupWebXR() {
   // controller 
   function onSelectStart() {
     this.userData.isSelecting = true;
+    shoot = true;
   }
   function onSelectEnd() {
     this.userData.isSelecting = false;
+    shoot = false;
   }
   controller = renderer.xr.getController(0);
   controller.addEventListener("selectstart", onSelectStart);

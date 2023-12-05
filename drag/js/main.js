@@ -13,6 +13,10 @@ let audioElement;
 let audioCtx;
 let fireworkSound;
 
+var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
+const TRANS3 = 2; const TRANS4 = TRANS3 + 10;
+let offs = TRANS3;
+
 function setupThree() {
   // renderer additional setup
   renderer.shadowMap.enabled = true;
@@ -57,6 +61,8 @@ function setupThree() {
     });
   }
 
+  // console.log("group", group);
+
   // gui
   gui.add(params, "cubes", 0, 5000).step(1).listen();
   gui.add(params, "scene_children", 0, 5000).step(1).listen();
@@ -67,6 +73,42 @@ function setupThree() {
 }
 
 function updateThree() {
+  var delta = clock.getDelta();
+  currentTime += delta;
+
+  // if (currentTime < 2) {
+  //   for (let j = 0; j < group.children.length; j++) {
+  //     let m = group.children[j];
+  //     let textOpacity = map(currentTime, 0, 2, 0, 1);
+  //     m.material.opacity = textOpacity;
+  //   }
+  // }
+
+  //  this worked
+
+  // if (currentTime >= 0 && currentTime < 7) {
+  //   for (let j = 0; j < group.children.length; j++) {
+  //     let m = group.children[j];
+  //     let textOpacity;
+  //     if (currentTime >= 0 && currentTime < 2) { textOpacity = map(currentTime, 0, 2, 0, 1); }
+  //     else if (currentTime >= 5 && currentTime < 7) { textOpacity = map(currentTime, 5, 7, 1, 0); }
+  //     else { textOpacity = 1; }
+  //     m.material.opacity = textOpacity;
+  //   }
+  // }
+
+  if (currentTime >= TRANS3 && currentTime < TRANS4) {
+    for (let j = 0; j < group.children.length; j++) {
+      let m = group.children[j];
+      let textOpacity;
+      if (currentTime >= TRANS3 && currentTime < TRANS3 + 2) { textOpacity = map(currentTime, TRANS3, TRANS3 + 2, 0, 1); }
+      else if (currentTime >= TRANS4 - 2 && currentTime < TRANS4) { textOpacity = map(currentTime, TRANS4 - 2, TRANS4, 1, 0); }
+      else { textOpacity = 1; }
+      m.material.opacity = textOpacity;
+    }
+  }
+
+
   cleanIntersected();
 
   intersectObjects(controller1);
@@ -131,7 +173,9 @@ function getText(content, font) {
   const material = new THREE.MeshStandardMaterial({
     color: 0x923e96,
     roughness: 0.7,
-    metalness: 0.0
+    metalness: 0.0,
+    transparent: true,
+    opacity: 0
   });
   const text = new THREE.Mesh(geometry, material);
   text.position.y = random(10, 200);

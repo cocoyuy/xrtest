@@ -7,10 +7,12 @@ let room;
 let cubes = [];
 let shoot = false; // scene 1: user shoot random obj
 
+let FLOOR = -200;
 let geometries;
 let fb;
 let wc;
 let bb;
+let mirror;
 
 function setupThree() {
   // WebXR
@@ -18,8 +20,11 @@ function setupThree() {
 
   // room
   room = getRoom();
-  room.position.y = -200;
+  // room.position.y = -200;
   scene.add(room);
+
+  mirror = getMirror();
+  mirror.position.y = FLOOR;
 
   // lights
   const hemiLight = new THREE.HemisphereLight(0xa5a5a5, 0x898989, 3);
@@ -54,32 +59,12 @@ function updateThree() {
 
   if (shoot) {
     let tCube = new Cube()
-      .setPosition(random(-50, 50), random(3, 7), random(-50, 50))
+      .setPosition(random(-10, 10), random(-150, -170), random(-10, 10))
       // .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
       .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
       .setScale(random(0.5, 1));
     cubes.push(tCube);
   }
-
-  // generate cubes by controller
-  // if (controller.userData.isSelecting === true) {
-  //   // controller's position and direction
-  //   const position = controller.position;
-  //   // const direction = new THREE.Vector3(0, 0, -1); // default direction
-  //   // direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
-
-  //   // generate a cube using the position and direction      
-  //   let tCube = new Cube()
-  //     .setPosition(position.x, position.y, position.z)
-  //     .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
-  //     .setScale(random(0.5, 1));
-  //   // .setPosition(position.x, position.y, position.z)
-  //   // .setVelocity(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
-  //   // .setAcc(random(-0.05, 0.05), random(0.01, 0.05), random(-0.05, 0.05))
-  //   // .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
-  //   // .setScale(random(0.5, 1.0));
-  //   cubes.push(tCube);
-  // }
 
   // update the cubes
   for (let c of cubes) {
@@ -90,16 +75,6 @@ function updateThree() {
     c.age();
     c.update();
   }
-
-  // remove the cubes that are done
-  // for (let i = 0; i < cubes.length; i++) {
-  //   let c = cubes[i];
-  //   if (c.isDone) {
-  //     scene.remove(c.mesh);
-  //     cubes.splice(i, 1);
-  //     i--;
-  //   }
-  // }
 
   // update the GUI
   params.cubes = cubes.length;
@@ -141,6 +116,29 @@ function getRoom() {
   return mesh;
 }
 
+// function getRoom() {
+//   const geometry = new THREE.SphereGeometry(1000, 32, 32); // 6
+//   const material = new THREE.MeshBasicMaterial({
+//     color: 0xfa9bdf, //color7
+//     side: THREE.DoubleSide
+//   });
+//   const mesh = new THREE.Mesh(geometry, material);
+//   return mesh;
+// }
+
+function getMirror() {
+  const geometry = new THREE.CircleGeometry(1000, 64);
+  groundMirror = new Reflector(geometry, {
+    clipBias: 0.003,
+    textureWidth: window.innerWidth * window.devicePixelRatio,
+    textureHeight: window.innerHeight * window.devicePixelRatio,
+    color: 0xffd678 //0xfce7b6 //0x883afc //b5b5b5 //fa0202 //b5b5b5
+  });
+  groundMirror.rotateX(- Math.PI / 2);
+  scene.add(groundMirror);
+  return groundMirror;
+}
+
 function getBox() {
   // const geometry = new THREE.BoxGeometry(1, 1, 1);
   const geometry = geometries[Math.floor(Math.random() * geometries.length)];
@@ -171,9 +169,9 @@ function loadGLTF(filepath) {
       console.log(fb);
       fb.material = new THREE.MeshMatcapMaterial({ //
       });
-      fb.scale.x = 0.2;
-      fb.scale.y = 0.2;
-      fb.scale.z = 0.2;
+      fb.scale.x = 0.5;
+      fb.scale.y = 0.5;
+      fb.scale.z = 0.5;
       // scene.add(model);
     },
     function (xhr) {
@@ -229,16 +227,6 @@ function loadGLTF_bb(filepath) {
       console.error('An error happened');
     }
   );
-}
-
-function getSphere() {
-  const geometry = new THREE.SphereGeometry(1000, 32, 32);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0x66e6ff,
-    side: THREE.DoubleSide
-  });
-  const mesh = new THREE.Mesh(geometry, material);
-  return mesh;
 }
 
 class Cube {
@@ -330,8 +318,8 @@ class Cube {
     }
   }
   update() {
-    if (this.pos.y < -200) {
-      this.pos.y = 0;
+    if (this.pos.y < FLOOR) {
+      this.pos.y = FLOOR;
       this.vel.y *= -1;
       // this.acc.y *= 1.0001;
       this.acc.y -= 0.001;
