@@ -69,8 +69,8 @@ function setupThree() {
 
   // audio
   // initAudio();
-  // getFireworkSound('assets/lfa-read-letters.mp3');
-  getFireworkSound('assets/Scene1.mp3'); // 'assets/font/Scene1.mp3'
+  getFireworkSound('assets/lfa-read-letters.mp3');
+  // getFireworkSound('assets/Scene1.mp3'); // 'assets/font/Scene1.mp3'
 }
 
 function updateThree() {
