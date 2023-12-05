@@ -99,6 +99,7 @@ function updateThree() {
 ///// UTILS /////
 
 function getFireworkSound(path) {
+  console.log(path);
   const audioListener = new THREE.AudioListener();
   camera.add(audioListener);
   fireworkSound = new THREE.Audio(audioListener);
