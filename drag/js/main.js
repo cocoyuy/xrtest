@@ -69,33 +69,13 @@ function setupThree() {
 
   // audio
   // initAudio();
-  getFireworkSound('assets/lfa-read-letters.mp3'); // 'assets/font/Scene1.mp3'
+  // getFireworkSound('assets/lfa-read-letters.mp3');
+  getFireworkSound('assets/Scene1.mp3'); // 'assets/font/Scene1.mp3'
 }
 
 function updateThree() {
   var delta = clock.getDelta();
   currentTime += delta;
-
-  // if (currentTime < 2) {
-  //   for (let j = 0; j < group.children.length; j++) {
-  //     let m = group.children[j];
-  //     let textOpacity = map(currentTime, 0, 2, 0, 1);
-  //     m.material.opacity = textOpacity;
-  //   }
-  // }
-
-  //  this worked
-
-  // if (currentTime >= 0 && currentTime < 7) {
-  //   for (let j = 0; j < group.children.length; j++) {
-  //     let m = group.children[j];
-  //     let textOpacity;
-  //     if (currentTime >= 0 && currentTime < 2) { textOpacity = map(currentTime, 0, 2, 0, 1); }
-  //     else if (currentTime >= 5 && currentTime < 7) { textOpacity = map(currentTime, 5, 7, 1, 0); }
-  //     else { textOpacity = 1; }
-  //     m.material.opacity = textOpacity;
-  //   }
-  // }
 
   if (currentTime >= TRANS3 && currentTime < TRANS4) {
     for (let j = 0; j < group.children.length; j++) {
