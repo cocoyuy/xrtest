@@ -68,7 +68,7 @@ function setupThree() {
   gui.add(params, "scene_children", 0, 5000).step(1).listen();
 
   // audio
-  // initAudio();
+  initAudio('assets/lfa-read-letters.mp3');
   getFireworkSound('assets/lfa-read-letters.mp3');
   // getFireworkSound('assets/Scene1.mp3'); // 'assets/font/Scene1.mp3'
 }
@@ -119,18 +119,18 @@ function getFireworkSound(path) {
   );
 }
 
-// function initAudio() {
-//   // if (audioCtx !== null) {
-//   //   return;
-//   // }
+function initAudio(path) {
+  if (audioCtx !== null) {
+    return;
+  }
 
-//   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-//   audioElement = new Audio('assets/font/Scene1.mp3');
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  audioElement = new Audio(path);
 
-//   audioElement.loop = true;
-//   audioElement.play();
-//   console.log("audio play");
-// }
+  audioElement.loop = true;
+  audioElement.play();
+  console.log("audio play");
+}
 
 function getRoom() {
   const geometry = new THREE.SphereGeometry(800, 32, 32);
