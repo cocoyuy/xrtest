@@ -43,7 +43,7 @@ let voiceOver;
 const BALL_SIZE = 15;
 
 function setupThree() {
-  getVoiceOver('assets/lfa-read-letters.mp3');
+  getVoiceOver('assets/lfa-read-letters.MP3');
 
   // WebXR
   setupWebXR();
