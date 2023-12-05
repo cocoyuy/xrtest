@@ -120,6 +120,7 @@ function getFireworkSound(path) {
 }
 
 function initAudio(path) {
+  console.log("init...");
   if (audioCtx !== null) {
     return;
   }
