@@ -36,7 +36,7 @@ let cubes = []; let shoot = false; let fb; let bb; // scene 1 objects
 
 let lfa = 'Letters From Afar'; let openingText; let textOpacity;
 let hi = '"Hi Mom, ..."'; let hiOpacity; let hiText;
-let yours = 'Yours,'; let cc = 'Coco';
+let yours = '"Yours,'; let cc = 'Coco"';
 let yOpacity; let yText; let cOpacity; let cText;
 
 let voiceOver;
@@ -445,7 +445,7 @@ function updateThree() {
 
     if (mosque !== undefined) {
       mosque.position.z = -800;
-      mosque.position.x = -290;
+      mosque.position.x = -300;
       mosque.position.y = 0;
       mosque.rotation.z = PI / 8;
       mosque.scale.x = 60.0;
