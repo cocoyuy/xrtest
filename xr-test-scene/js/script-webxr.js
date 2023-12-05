@@ -6,7 +6,7 @@ function setupWebXR() {
 
     // controller 
     controller1 = renderer.xr.getController(0);
-    controller1.addEventListener('selectstart', onSelectStart); // when the trigger is pressed
+    controller1.addEventListener('selectstart', startXRSession); // when the trigger is pressed
     controller1.addEventListener('selectend', onSelectEnd); // when the trigger is released
     scene.add(controller1);
 
@@ -40,6 +40,22 @@ function setupWebXR() {
     controller2.add(line.clone());
 
     raycaster = new THREE.Raycaster();
+}
+
+function startXRSession() {
+    navigator.xr.requestSession('immersive-vr', {
+        requiredFeatures: ['viewer', 'hand-tracking', 'local', 'teleport'],
+        optionalFeatures: ['hand-tracking'],
+        audio: true,
+    })
+        .then((session) => {
+            // Handle the XR session
+        })
+        .catch((error) => {
+            // Handle any errors
+            console.error('Failed to request XR session:', error);
+        });
+    voiceOver.play();
 }
 
 function onSelectStart(event) {

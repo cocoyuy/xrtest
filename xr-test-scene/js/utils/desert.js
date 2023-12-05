@@ -1,5 +1,5 @@
 function getDesert() {
-    let geometry = new THREE.PlaneGeometry(WORLD_HALF * 2, WORLD_HALF * 2, 100, 100);
+    let geometry = new THREE.PlaneGeometry(WORLD_SIZE * 2, WORLD_SIZE * 2, 100, 100);
     const material = new THREE.MeshBasicMaterial({
         color: 0x080808,
         side: THREE.DoubleSide
