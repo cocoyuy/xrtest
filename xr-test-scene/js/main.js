@@ -29,7 +29,7 @@ let shanghai; let buildingGroup;
 
 var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
 const TRANS0 = 6; const TRANS1 = TRANS0 + 19; const TRANS2 = TRANS1 + 2; const TRANS3 = TRANS2 + 14; const TRANS4 = TRANS3 + 30;
-const TRANS5 = TRANS4 + 22; const TRANS6 = TRANS5 + 15; const TRANS7 = TRANS6 + 15; const TRANS8 = TRANS7 + 10;
+const TRANS5 = TRANS4 + 22; const TRANS6 = TRANS5 + 15; const TRANS7 = TRANS6 + 17; const TRANS8 = TRANS7 + 8;
 let light; let hemiLight;
 
 let cubes = []; let shoot = false; let fb; let bb; // scene 1 objects 
@@ -93,6 +93,7 @@ function setupThree() {
   const loader4 = new FontLoader();
   loader4.load('assets/font/Cinzel_Regular.json', function (font) {
     cText = getHi(cc, font);
+    cText.position.y = -30;
     scene.add(cText);
   });
 
@@ -210,6 +211,8 @@ function updateThree() {
   }
 
   if (currentTime >= TRANS0 && currentTime < TRANS1) {
+    scene.remove(hiText);
+    scene.remove(openingText);
     // voiceOver.play();
     // scene.add(voiceOver);
     let R_offset = map(currentTime, TRANS0, TRANS1, 250, 137);
@@ -328,7 +331,7 @@ function updateThree() {
         let particles = [];
         for (let i = 0; i < MAX_PARTICLE_NUMBER; i++) {
           let tParticle = new Particle()
-            .setPosition((j - 2) * 200 + r, 200 + r, -600)
+            .setPosition((j - 2) * 200 + r, 600 + r, -600)
           particles.push(tParticle);
         }
         particlesArr.push(particles);
@@ -387,18 +390,18 @@ function updateThree() {
     mirror.visible = true;
     let R_offset; let G_offset; let B_offset;
     let roomColor;
-    if (currentTime >= TRANS5 && currentTime < TRANS5 + 1) {
-      R_offset = map(currentTime, TRANS5, TRANS5 + 1, 1, 250);
-      G_offset = map(currentTime, TRANS5, TRANS5 + 1, 1, 179);
-      B_offset = map(currentTime, TRANS5, TRANS5 + 1, 1, 239);
+    if (currentTime >= TRANS5 && currentTime < TRANS5 + 2) {
+      R_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 91);
+      G_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 165);
+      B_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 222);
       roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
-    } if (currentTime >= TRANS6 - 1 && currentTime < TRANS6) {
-      R_offset = map(currentTime, TRANS6 - 1, TRANS6, 250, 1);
-      G_offset = map(currentTime, TRANS6 - 1, TRANS6, 179, 1);
-      B_offset = map(currentTime, TRANS6 - 1, TRANS6, 239, 1);
+    } if (currentTime >= TRANS6 - 2 && currentTime < TRANS6) {
+      R_offset = map(currentTime, TRANS6 - 2, TRANS6, 91, 1);
+      G_offset = map(currentTime, TRANS6 - 2, TRANS6, 165, 1);
+      B_offset = map(currentTime, TRANS6 - 2, TRANS6, 222, 1);
       roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
     } else {
-      roomColor = new THREE.Color(250, 179, 239);
+      roomColor = new THREE.Color(91 / 250, 165 / 250, 222 / 250);
     }
     room.material.color = roomColor;
 
@@ -442,21 +445,21 @@ function updateThree() {
 
     if (mosque !== undefined) {
       mosque.position.z = -800;
-      mosque.position.x = -220;
+      mosque.position.x = -290;
       mosque.position.y = 0;
-      mosque.rotation.z = PI / 10;
-      mosque.scale.x = 80.0;
-      mosque.scale.y = 80.0;
-      mosque.scale.z = 80.0;
+      mosque.rotation.z = PI / 8;
+      mosque.scale.x = 60.0;
+      mosque.scale.y = 60.0;
+      mosque.scale.z = 60.0;
     }
 
     if (seagull !== undefined) {
       seagull.position.x = 400;
       seagull.position.z = -1000;
       seagull.position.y = 200;
-      seagull.scale.x = 30.0;
-      seagull.scale.y = 30.0;
-      seagull.scale.z = 30.0;
+      seagull.scale.x = 10.0;
+      seagull.scale.y = 10.0;
+      seagull.scale.z = 10.0;
       mixer.update(delta); // update seagulls animation
     }
   }
@@ -492,14 +495,14 @@ function updateThree() {
   if (currentTime >= TRANS8 && currentTime < TRANS8 + 10) {
 
     scene.remove(shanghai);
-    let R_offset = map(currentTime, 0, TRANS0, 109, 250);
-    let G_offset = map(currentTime, 0, TRANS0, 220, 179);
-    let B_offset = map(currentTime, 0, TRANS0, 237, 239);
+    let R_offset = map(currentTime, TRANS8, TRANS8 + 10, 109, 250);
+    let G_offset = map(currentTime, TRANS8, TRANS8 + 10, 220, 179);
+    let B_offset = map(currentTime, TRANS8, TRANS8 + 10, 237, 239);
     const roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
     room.material.color = roomColor;
 
     if (currentTime < TRANS8 + 2) {
-      yOpacity = map(currentTime, 0, 2, 0, 1);
+      yOpacity = map(currentTime, TRANS8, TRANS8 + 2, 0, 1);
       cOpacity = 0;
     } else if (currentTime >= TRANS8 + 2 && currentTime < TRANS8 + 4) {
       yOpacity = 1;

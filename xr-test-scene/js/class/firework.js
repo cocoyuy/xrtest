@@ -6,7 +6,7 @@ class Particle {
         this.scl = createVector(1, 1, 1);
         this.mass = this.scl.x * this.scl.y * this.scl.z;
         this.lifespan = 1.0;
-        this.lifeReduction = random(0.011, 0.013);
+        this.lifeReduction = random(0.018, 0.02);
         this.isDone = false;
     }
     setPosition(x, y, z) {
