@@ -445,7 +445,7 @@ function updateThree() {
 
     if (mosque !== undefined) {
       mosque.position.z = -800;
-      mosque.position.x = -300;
+      mosque.position.x = -330;
       mosque.position.y = 0;
       mosque.rotation.z = PI / 8;
       mosque.scale.x = 60.0;

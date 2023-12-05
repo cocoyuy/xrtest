@@ -1,7 +1,7 @@
 function getText(content, font) {
     const geometry = new TextGeometry(content, {
         font: font,
-        size: random(10, 15),
+        size: random(15, 20),
         height: 5,
     });
     // const material = new THREE.MeshBasicMaterial({
