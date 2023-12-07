@@ -13,7 +13,7 @@ function getHi(content, font) {
     text.position.y = -50;
     text.position.x = 150;
     text.position.z = -250;
-    // text.lookAt(0, 0, 100);
+    text.lookAt(0, 0, 100);
     // scene.add(text);
     return text;
 }
