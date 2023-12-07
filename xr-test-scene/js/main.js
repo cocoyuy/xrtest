@@ -176,7 +176,7 @@ function updateThree() {
     voiceOver.play();
     playtime++;
     TRANS0 = currentTime;
-    TRANS1 = TRANS0 + 19; TRANS2 = TRANS1 + 2; TRANS3 = TRANS2 + 14; TRANS4 = TRANS3 + 30;
+    TRANS1 = TRANS0 + 18; TRANS2 = TRANS1 + 3; TRANS3 = TRANS2 + 14; TRANS4 = TRANS3 + 30;
     TRANS5 = TRANS4 + 22; TRANS6 = TRANS5 + 15; TRANS7 = TRANS6 + 17; TRANS8 = TRANS7 + 8;
     // console.log("transition print", TRANS1, TRANS2);
   }
@@ -452,7 +452,7 @@ function updateThree() {
     // desert.position.y = -200;
 
     if (mosque !== undefined) {
-      mosque.position.z = -800;
+      mosque.position.z = -600;
       mosque.position.x = -200;
       mosque.position.y = FLOOR + 150;
       mosque.rotation.z = PI / 8;
@@ -464,7 +464,7 @@ function updateThree() {
     if (seagull !== undefined) {
       seagull.position.x = 400;
       seagull.position.z = -800;
-      seagull.position.y = 200;
+      seagull.position.y = FLOOR + 200;
       seagull.scale.x = 10.0;
       seagull.scale.y = 10.0;
       seagull.scale.z = 10.0;
