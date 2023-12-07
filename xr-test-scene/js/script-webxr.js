@@ -6,7 +6,7 @@ function setupWebXR() {
 
     // controller 
     controller1 = renderer.xr.getController(0);
-    controller1.addEventListener('selectstart', startXRSession); // when the trigger is pressed
+    controller1.addEventListener('selectstart', onSelectStart); // when the trigger is pressed
     controller1.addEventListener('selectend', onSelectEnd); // when the trigger is released
     scene.add(controller1);
 

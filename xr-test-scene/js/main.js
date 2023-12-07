@@ -333,7 +333,7 @@ function updateThree() {
         let particles = [];
         for (let i = 0; i < MAX_PARTICLE_NUMBER; i++) {
           let tParticle = new Particle()
-            .setPosition((j - 2) * 200 + r, 500 + r, r * 6)
+            .setPosition((j - 2) * 200 + r, 500 + r, -400 + r * 4)
           particles.push(tParticle);
         }
         particlesArr.push(particles);
@@ -454,7 +454,7 @@ function updateThree() {
     if (mosque !== undefined) {
       mosque.position.z = -800;
       mosque.position.x = -200;
-      mosque.position.y = FLOOR;
+      mosque.position.y = FLOOR + 150;
       mosque.rotation.z = PI / 8;
       mosque.scale.x = 60.0;
       mosque.scale.y = 60.0;
