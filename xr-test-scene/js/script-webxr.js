@@ -55,10 +55,11 @@ function startXRSession() {
             // Handle any errors
             console.error('Failed to request XR session:', error);
         });
-    voiceOver.play();
+    // voiceOver.play();
 }
 
 function onSelectStart(event) {
+    play = true;
     shoot = true;
     text_rotate2 = true;
     // fire = true;
@@ -77,6 +78,7 @@ function onSelectStart(event) {
 }
 
 function onSelectEnd(event) {
+    play = false;
     shoot = false;
     text_rotate2 = false;
     // fire = false;

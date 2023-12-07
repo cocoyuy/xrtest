@@ -28,8 +28,8 @@ let desert; let mosque; let seagull; let mixer;
 let shanghai; let buildingGroup;
 
 var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
-const TRANS0 = 6; const TRANS1 = TRANS0 + 19; const TRANS2 = TRANS1 + 2; const TRANS3 = TRANS2 + 14; const TRANS4 = TRANS3 + 30;
-const TRANS5 = TRANS4 + 22; const TRANS6 = TRANS5 + 15; const TRANS7 = TRANS6 + 17; const TRANS8 = TRANS7 + 8;
+let TRANS0 = 60; let TRANS1 = TRANS0 + 19; let TRANS2 = TRANS1 + 2; let TRANS3 = TRANS2 + 14; let TRANS4 = TRANS3 + 30;
+let TRANS5 = TRANS4 + 22; let TRANS6 = TRANS5 + 15; let TRANS7 = TRANS6 + 17; let TRANS8 = TRANS7 + 8;
 let light; let hemiLight;
 
 let cubes = []; let shoot = false; let fb; let bb; // scene 1 objects 
@@ -40,7 +40,8 @@ let yours = '"Yours,'; let cc = 'Coco"';
 let yOpacity; let yText; let cOpacity; let cText;
 
 let voiceOver;
-const BALL_SIZE = 15;
+const BALL_SIZE = 20;
+const MAX_SPHERE = 2000;
 
 function setupThree() {
   getVoiceOver('assets/lfa-read-letters.MP3');
@@ -115,7 +116,7 @@ function setupThree() {
   // skydive scene
   gravity = createVector(0, -0.07, 0);
   sphereGroup = new THREE.Group();
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < MAX_SPHERE; i++) {
     let box = getSphere();
     box.position.x = random(-WORLD_HALF * 2, WORLD_HALF * 2);
     box.position.y = random(-WORLD_HALF * 5, 0);
@@ -174,6 +175,7 @@ function updateThree() {
     console.log("play voiceover");
     voiceOver.play();
     playtime++;
+    TRANS0 = currentTime;
   }
 
   // Update time
@@ -222,7 +224,7 @@ function updateThree() {
     room.material.color = roomColor;
     if (shoot) {
       let tCube = new Rand()
-        .setPosition(random(-300, 300), random(-100, 5), random(-700, -100))
+        .setPosition(random(-600, 600), random(-100, 5), random(-600, 600))
         .setRotationVelocity(random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05))
         .setScale(random(0.5, 1));
       cubes.push(tCube);
@@ -331,7 +333,7 @@ function updateThree() {
         let particles = [];
         for (let i = 0; i < MAX_PARTICLE_NUMBER; i++) {
           let tParticle = new Particle()
-            .setPosition((j - 2) * 200 + r, 600 + r, -600)
+            .setPosition((j - 2) * 200 + r, 500 + r, -600 + r)
           particles.push(tParticle);
         }
         particlesArr.push(particles);
@@ -381,6 +383,7 @@ function updateThree() {
 
   // gre vocabulary
   if (currentTime >= TRANS5 && currentTime < TRANS6) {
+    pointCloud.geometry.setDrawRange(0, 0); //-1
     // for (let f in fireworks) {
     //   scene.remove(f.mesh);
     //   fireworks.splice(f, 1); //
@@ -390,10 +393,10 @@ function updateThree() {
     mirror.visible = true;
     let R_offset; let G_offset; let B_offset;
     let roomColor;
-    if (currentTime >= TRANS5 && currentTime < TRANS5 + 2) {
-      R_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 91);
-      G_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 165);
-      B_offset = map(currentTime, TRANS5, TRANS5 + 2, 1, 222);
+    if (currentTime >= TRANS5 && currentTime < TRANS5 + 3) {
+      R_offset = map(currentTime, TRANS5, TRANS5 + 3, 1, 91);
+      G_offset = map(currentTime, TRANS5, TRANS5 + 3, 1, 165);
+      B_offset = map(currentTime, TRANS5, TRANS5 + 3, 1, 222);
       roomColor = new THREE.Color(R_offset / 250, G_offset / 250, B_offset / 250);
     } if (currentTime >= TRANS6 - 2 && currentTime < TRANS6) {
       R_offset = map(currentTime, TRANS6 - 2, TRANS6, 91, 1);
@@ -455,7 +458,7 @@ function updateThree() {
 
     if (seagull !== undefined) {
       seagull.position.x = 400;
-      seagull.position.z = -1000;
+      seagull.position.z = -800;
       seagull.position.y = 200;
       seagull.scale.x = 10.0;
       seagull.scale.y = 10.0;
