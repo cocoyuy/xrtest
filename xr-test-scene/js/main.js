@@ -454,7 +454,7 @@ function updateThree() {
 
     if (controller2.userData.isSelecting === true) {
       const direction = new THREE.Vector3(0, 0, -1); // default direction
-      direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
+      direction.applyQuaternion(controller2.quaternion); // apply the rotation of the controller 
       mosque_rotate = direction.z;
     }
 
