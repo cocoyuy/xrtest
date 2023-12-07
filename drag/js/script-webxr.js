@@ -69,7 +69,7 @@ function onSelectStart(event) {
     const intersection = intersections[0];
 
     const object = intersection.object;
-    // object.material.emissive.b = 1;
+    object.material.emissive.b = 1;
     const doneColor = new THREE.Color(0x04b015);
     object.material.color.set(doneColor);
     controller.attach(object);
@@ -89,7 +89,7 @@ function onSelectEnd(event) {
   if (controller.userData.selected !== undefined) {
 
     const object = controller.userData.selected;
-    // object.material.emissive.b = 0;
+    object.material.emissive.b = 0;
     const doneColor = new THREE.Color(0x04b015);
     object.material.color.set(doneColor);
     group.attach(object);
