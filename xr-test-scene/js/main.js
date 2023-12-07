@@ -452,7 +452,7 @@ function updateThree() {
     // desert.rotation.x = PI / 2 * 3;
     // desert.position.y = -200;
 
-    if (controller.userData.isSelecting === true) {
+    if (controller2.userData.isSelecting === true) {
       const direction = new THREE.Vector3(0, 0, -1); // default direction
       direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
       mosque_rotation = direction.z;
