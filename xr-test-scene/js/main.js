@@ -178,7 +178,7 @@ function updateThree() {
     TRANS0 = currentTime;
     TRANS1 = TRANS0 + 19; TRANS2 = TRANS1 + 2; TRANS3 = TRANS2 + 14; TRANS4 = TRANS3 + 30;
     TRANS5 = TRANS4 + 22; TRANS6 = TRANS5 + 15; TRANS7 = TRANS6 + 17; TRANS8 = TRANS7 + 8;
-    console.log("transition print", TRANS1, TRANS2);
+    // console.log("transition print", TRANS1, TRANS2);
   }
 
   // Update time
@@ -204,9 +204,6 @@ function updateThree() {
     } else if (currentTime >= 2 && currentTime < 4) {
       textOpacity = 1;
       hiOpacity = map(currentTime, 2, 4, 0, 0.8);
-    } else if (currentTime >= 5 && currentTime < 6) {
-      textOpacity = map(currentTime, 5, 6, 1, 0);
-      hiOpacity = map(currentTime, 5, 6, 0.8, 0);
     } else {
       textOpacity = 1;
       hiOpacity = 0.8;
@@ -386,7 +383,7 @@ function updateThree() {
 
   // gre vocabulary
   if (currentTime >= TRANS5 && currentTime < TRANS6) {
-    pointCloud.geometry.setDrawRange(0, 0); //-1
+    for (pointCloud in pointClouds) { pointCloud.geometry.setDrawRange(0, 0); } //-1
     // for (let f in fireworks) {
     //   scene.remove(f.mesh);
     //   fireworks.splice(f, 1); //
@@ -451,8 +448,8 @@ function updateThree() {
 
     if (mosque !== undefined) {
       mosque.position.z = -800;
-      mosque.position.x = -330;
-      mosque.position.y = 0;
+      mosque.position.x = -200;
+      mosque.position.y = FLOOR;
       mosque.rotation.z = PI / 8;
       mosque.scale.x = 60.0;
       mosque.scale.y = 60.0;
