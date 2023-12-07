@@ -41,7 +41,7 @@ let yOpacity; let yText; let cOpacity; let cText;
 
 let voiceOver;
 const BALL_SIZE = 20;
-const MAX_SPHERE = 2000;
+const MAX_SPHERE = 3000;
 
 function setupThree() {
   getVoiceOver('assets/lfa-read-letters.MP3');
@@ -300,7 +300,7 @@ function updateThree() {
     mirror.visible = true;
     mirror.position.y = FLOOR;
     if (text_rotate2) {
-      textGroup2.rotation.y += 0.002;
+      textGroup2.rotation.y += 0.003;
     }
 
     for (let j = 0; j < textGroup2.children.length; j++) {
@@ -333,7 +333,7 @@ function updateThree() {
         let particles = [];
         for (let i = 0; i < MAX_PARTICLE_NUMBER; i++) {
           let tParticle = new Particle()
-            .setPosition((j - 2) * 200 + r, 500 + r, -600 + r * 2)
+            .setPosition((j - 2) * 200 + r, 500 + r, r * 6)
           particles.push(tParticle);
         }
         particlesArr.push(particles);
@@ -383,7 +383,12 @@ function updateThree() {
 
   // gre vocabulary
   if (currentTime >= TRANS5 && currentTime < TRANS6) {
-    for (pointCloud in pointClouds) { pointCloud.geometry.setDrawRange(0, 0); } //-1
+    pointClouds = [];
+    // console.log(pointClouds);
+    // for (pointCloud in pointClouds) {
+    //   console.log(pointCloud);
+    //   pointCloud.geometry.setDrawRange(0, 0);
+    // } //-1
     // for (let f in fireworks) {
     //   scene.remove(f.mesh);
     //   fireworks.splice(f, 1); //
