@@ -28,8 +28,8 @@ let desert; let mosque; let seagull; let mixer;
 let shanghai; let buildingGroup;
 
 var clock = new THREE.Clock(); var duration = 5; var currentTime = 0;
-let TRANS0 = 60; let TRANS1 = TRANS0 + 19; let TRANS2 = TRANS1 + 2; let TRANS3 = TRANS2 + 14; let TRANS4 = TRANS3 + 30;
-let TRANS5 = TRANS4 + 22; let TRANS6 = TRANS5 + 15; let TRANS7 = TRANS6 + 17; let TRANS8 = TRANS7 + 8;
+let TRANS0 = 60; let TRANS1 = 60; let TRANS2 = 60; let TRANS3 = 60; let TRANS4 = 60;
+let TRANS5 = 60; let TRANS6 = 60; let TRANS7 = 60; let TRANS8 = 60;
 let light; let hemiLight;
 
 let cubes = []; let shoot = false; let fb; let bb; // scene 1 objects 
@@ -176,6 +176,9 @@ function updateThree() {
     voiceOver.play();
     playtime++;
     TRANS0 = currentTime;
+    TRANS1 = TRANS0 + 19; TRANS2 = TRANS1 + 2; TRANS3 = TRANS2 + 14; TRANS4 = TRANS3 + 30;
+    TRANS5 = TRANS4 + 22; TRANS6 = TRANS5 + 15; TRANS7 = TRANS6 + 17; TRANS8 = TRANS7 + 8;
+    console.log("transition print", TRANS1, TRANS2);
   }
 
   // Update time
