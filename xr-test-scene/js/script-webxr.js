@@ -59,6 +59,7 @@ function startXRSession() {
 }
 
 function onSelectStart(event) {
+    this.userData.isSelecting = true;
     play = true;
     shoot = true;
     text_rotate2 = true;
@@ -78,6 +79,7 @@ function onSelectStart(event) {
 }
 
 function onSelectEnd(event) {
+    this.userData.isSelecting = false;
     play = false;
     shoot = false;
     text_rotate2 = false;

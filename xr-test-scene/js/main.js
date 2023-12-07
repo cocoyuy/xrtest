@@ -10,7 +10,7 @@ let texts = ['equivocal', 'lucid', 'precipitate', 'assuage', 'erudite', 'enigma'
   'capricious', 'loquacious', 'pragmatic', 'volatile', 'ephemeral', 'laconic', 'cacophony', 'enervate', 'ingenuous', 'misanthrope', 'venerate', 'eulogy', 'lethargic', 'obdurate', 'philanthropic', 'garrulous', 'malleable', 'ostentation', 'prevaricate', 'prevaricate', 'eulogy', 'laconic', 'loquacious', 'cacophony', 'malleable', 'ephemeral', 'pedant'
 ];
 // let text_rotate = false; // not used when drag
-
+let mosque_rotate;
 let textGroup2; let text_rotate2 = false;
 let texts2 = ['zero restrictions', 'surging virus', 'XBB', 'high infection', 'new cases', 'outbreaks', 'tested positive', 'deaths', 'the first wave', 'the second wave', '“bad cold”', 'reopening', 'medical care', 'fatalities', 'avoiding Shanghai', 'death rate', 'protests',
   'policies', 'freedom', 'low vaccination rates', 'zero restrictions', 'surging virus', 'XBB', 'high infection', 'new cases', 'outbreaks', 'tested positive', 'deaths', 'the first wave', 'the second wave', '“bad cold”', 'reopening', 'medical care', 'fatalities', 'avoiding Shanghai', 'death rate', 'protests', 'policies', 'freedom', 'low vaccination rates'
@@ -168,6 +168,7 @@ function setupThree() {
   loadShanghai("assets/shanghai/scene.gltf");
   loadMosque("assets/blue_mosque/scene.gltf");
   loadSeagull("assets/seagulls/scene.gltf");
+  mosque_rotate = PI / 8;
 }
 
 function updateThree() {
@@ -451,11 +452,17 @@ function updateThree() {
     // desert.rotation.x = PI / 2 * 3;
     // desert.position.y = -200;
 
+    if (controller.userData.isSelecting === true) {
+      const direction = new THREE.Vector3(0, 0, -1); // default direction
+      direction.applyQuaternion(controller.quaternion); // apply the rotation of the controller 
+      mosque_rotation = direction.z;
+    }
+
     if (mosque !== undefined) {
       mosque.position.z = -600;
       mosque.position.x = -200;
       mosque.position.y = FLOOR + 150;
-      mosque.rotation.z = PI / 8;
+      mosque.rotation.z = mosque_rotate;
       mosque.scale.x = 60.0;
       mosque.scale.y = 60.0;
       mosque.scale.z = 60.0;
