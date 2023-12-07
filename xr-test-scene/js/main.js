@@ -333,7 +333,7 @@ function updateThree() {
         let particles = [];
         for (let i = 0; i < MAX_PARTICLE_NUMBER; i++) {
           let tParticle = new Particle()
-            .setPosition((j - 2) * 200 + r, 500 + r, -600 + r)
+            .setPosition((j - 2) * 200 + r, 500 + r, -600 + r * 2)
           particles.push(tParticle);
         }
         particlesArr.push(particles);
