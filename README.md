@@ -5,7 +5,7 @@ The project can be experienced on both **VR headsets** (recommended for full int
 - **On VR headsets**: Interact with VR controllers for an immersive, hands-on experience.
 - **On laptops**: Use the space bar and arrow keys to interact. Please note that interactions are more limited on laptops.
   
-[**Experience Letters From Afar**](https://github.com/xiaocheny1209/Letters-From-Afar/lfa)
+[**Experience Letters From Afar**](https://xiaocheny1209.github.io/Letters-From-Afar/lfa/)
 
 ### 🎥 Demos
 - **2-min Full Demo:** [Watch here](https://drive.google.com/file/d/1t2SC5bicZ31L4YooWs9XnuZAS5YPHP1S/view?usp=drive_link)
